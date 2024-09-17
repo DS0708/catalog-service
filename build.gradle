@@ -23,6 +23,8 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     //Java Bean Validation은 annotation을 통해 자바 객체에 대한 제약 조건 및 유효성 검사 규칙을 표현하기 위해 사용
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    //WebTestClient는 스프링 webflux 프로젝트의 일부이기 때문에 관련 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
