@@ -4,7 +4,7 @@ on: push
 jobs:
   build:  # 작업의 고유 식별자
     name: Build and Test  # 작업의 인간 친화적 명칭
-    runs-on: ubuntu_22.04 # 작업이 실행될 머신의 유형
+    runs-on: ubuntu-22.04 # 작업이 실행될 머신의 유형
     permissions:  # 작업에 부여된 권한
       contents: read  #현재 깃 저장소를 체크 아웃할 수 있는 권한
       security-events: write  # 깃허브에 보안 이벤트를 제출할 수 있는 권한
@@ -33,4 +33,4 @@ jobs:
     - name: Build, unit tests and integration tests
       run: |
         chmod +x gradlew 
-        ./gradelw build
+        ./gradlew build
