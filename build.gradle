@@ -17,6 +17,14 @@ repositories {
     mavenCentral()
 }
 
+//프로젝트를 빌드할 때 그래들이 설정 프로세서를 사용하도록 설정
+configurations {
+    compileOnly{
+        //런타임 의존성에서 제외하여 빌드 결과물의 크기를 줄임, annotationProcessor는 컴파일 시에만 필요하므로
+        extendsFrom annotationProcessor
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -25,6 +33,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     //WebTestClient는 스프링 webflux 프로젝트의 일부이기 때문에 관련 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    //프로젝트를 빌드할 때 새로운 속성에 대한 메타데이터가 자동으로 생성되고 META-INF/spring-configuration-metadata.json에 저장하여 IDE가 자동완성과 같은 기능을 지원하도록 함
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+//bootRun작업을 실행할 때, 로컬 개발 환경을 위해 testdata 프로파일을 설정
+bootRun{
+    systemProperty 'spring.profiles.active', 'testdata'
 }
 
 tasks.named('test') {
