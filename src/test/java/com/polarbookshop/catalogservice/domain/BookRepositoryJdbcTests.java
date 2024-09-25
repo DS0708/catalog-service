@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJdbcTest //Spring Data JDBC 컴포넌트를 집중적으로 테스트하는 Class
 @Import(DataConfig.class) //Auditing를 활성화하기 위해 필요
-//@AutoConfigureTestDatabase( //TestContainer를 이용해야 하기 때문에 내장 테스트 DB 사용을 비활성화
-//        replace = AutoConfigureTestDatabase.Replace.NONE
-//)
+@AutoConfigureTestDatabase( //TestContainer를 이용해야 하기 때문에 내장 테스트 DB 사용을 비활성화
+        replace = AutoConfigureTestDatabase.Replace.NONE    //slice test할 때는 스프링 부트는 인메모리 DB를 사용하므로 비활성화 해줘야함.
+)
 @ActiveProfiles("integration") //application-integration.yaml에서 설정을 로드하기 위해 선언
 public class BookRepositoryJdbcTests {
 
