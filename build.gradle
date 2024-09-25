@@ -46,6 +46,10 @@ dependencies {
     implementation 'org.springframework.retry:spring-retry'
     //새로고침 end-point를 제공하기 위핸 Spring Boot Actuator, 새로고침 이벤트를 트리거하는 /actuator/refresh 엔드포인트를 설정
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //Spring Data JDBC
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    //애플리케이션이 PostgreSQL 데이터베이스에 연결할 수 있도록 JDBC 드라이버 제공
+    runtimeOnly 'org.postgresql:postgresql'
 }
 
 dependencyManagement {

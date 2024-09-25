@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Profile("testdata") //이 클래스를 testdata 프로파일에 할당, 즉 testdata 프로파일이 활성화될 때만 로드된다.
 public class BookDataLoader {
@@ -19,9 +21,10 @@ public class BookDataLoader {
     //이 이벤트는 애플리케이션 시작 단계가 완료되면 발생
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookTestData() {
-        var book1 = new Book("1234567891", "Northern Lights", "Lyra Silverstar", 9.90);
-        var book2 = new Book("1234567892", "Polar Journey", "Iorek Polarson", 12.90);
-        bookRepository.save(book1);
-        bookRepository.save(book2);
+        bookRepository.deleteAll();
+        // Spring Data JDBC 프레임워크가 내부적으로 식별자와 버전에 대한 할당 값을 처리
+        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90);
+        var book2 = Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90);
+        bookRepository.saveAll(List.of(book1, book2));
     }
 }

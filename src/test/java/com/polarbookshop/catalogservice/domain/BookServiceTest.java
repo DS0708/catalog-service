@@ -29,7 +29,7 @@ public class BookServiceTest {
     @Test
     void whenBookToCreateAlreadyExistsThenThrows(){
         var bookIsbn = "1234561232";
-        var bookToCreate = new Book(bookIsbn, "Title", "Author", 9.90);
+        var bookToCreate = Book.of(bookIsbn, "Title", "Author", 9.90);
         //특정 ISBN의 책이 이미 존재한다고 가정
         when(bookRepository.existsByIsbn(bookIsbn)).thenReturn(true);
         //예외가 발생하고 해당 예외의 타입과 메시지가 기대하는 바와 일치하는지 검사

@@ -1,28 +1,38 @@
 spring:
   application:
-    name: catalog-service # ?? ???? ??? ????? ? ???? application name
+    name: catalog-service # 애플리케이션의 이름 설정
   config:
-    import: "optional:configserver:" # ???? config server?? ?? ???? ????.
+    import: "optional:configserver:" # 외부 config server가 열려있으면 가져오고 없으면, 이것 사용
   cloud:
     config:
       uri: http://localhost:8888 # Config Server's URL
-      request-connect-timeout: 5000 # Config server? ??? ??? ???? ?? (ms)
-      request-read-timeout: 5000 # Config server?? ?? ???? ?? ??? ???? ?? (ms)
-      fail-fast: false # ?? ?? ?? ??? ??? ??? ??, ??? ??? ? ??? true? ??? ???? ?????. (?? test? ????? false? ??)
+      request-connect-timeout: 5000 # Config Server로의 연결 시도 시간 제한(ms)
+      request-read-timeout: 5000 # Config Server로부터 응답을 기다리는 시간 제한(ms)
+      fail-fast: false # 초기 시작 시 구성 서버 연결 실패 시 애플리케이션이 실패하도록 설정(true일 경우). 개발 환경에서는 false로 설정.
       retry:
-        max-attempts: 6 # ?? retry ?? ??
-        initial-interval: 1000 # ?? retry ?? ?? (ms)
-        max-interval: 2000 # retry ?? ?? ?? (ms)
-        multiplier: 1.1 # ?? ?? ?? ??
+        max-attempts: 6 # 재시도 할 최대 횟수
+        initial-interval: 1000 # 첫 재시도 간격(ms)
+        max-interval: 2000 # 재시도 간격의 최대 값(ms)
+        multiplier: 1.1 # 재시도 간격 증가 배율
+  datasource:
+    username: user
+    password: password
+    url: jdbc:postgresql://localhost:5432/polardb_catalog
+    hikari:
+      connection-timeout: 2000 # 풀에서 connection object를 얻기 위해 기다려야 하는 최대 시간(ms)
+      maximum-pool-size: 5 # 히카리CP가 풀에 최대한으로 유지할 수 있는 connection object의 수
+  sql: # 인메모리 데이터베이스를 사용하지 않는 경우 Spring  Data가 schema.sql 파일을 자동으로 로드하게 하기 위해 필요한 Option
+    init:
+      mode: always
 
 server:
-  port: 9001
+  port: 9001 # server's port number
   tomcat:
-    connection-timeout: 2s
-    keep-alive-timeout:
+    connection-timeout: 2s # 서버의 연결 시간 초과
+    keep-alive-timeout: # 서버의 Keep-Alive 시간 초과
     threads:
-      max: 50
-      min-spare: 5
+      max: 50 # 최대 스레드 수를 설정
+      min-spare: 5 # 최소 여유 스레드 수
 
 polar:
   greeting: Welcome to the local book catalog!
@@ -31,6 +41,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh # /actuator/refresh ?????? ????? ???
-
+        include: refresh # actuator 엔드포인트 중 refresh 만 노출
 

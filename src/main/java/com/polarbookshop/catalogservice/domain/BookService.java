@@ -37,11 +37,14 @@ public class BookService {
         return bookRepository.findByIsbn(isbn)
                 .map(existingBook -> {
                     var bookToUpdate = new Book(
-                            //책 수정시, ISBN 코드를 제외한 모든 필드 수정 가능
-                            existingBook.isbn(),
+                            existingBook.id(), //기존 책의 식별자 사용
+                            existingBook.isbn(),//책 수정시, ISBN 코드를 제외한 모든 필드 수정 가능
                             book.title(),
                             book.author(),
-                            book.price());
+                            book.price(),
+                            existingBook.createdDate(), //기존 Book record의 생성 날짜 사용
+                            existingBook.lastModifiedDate(), //일단 기존 책 레코드의 마지막 수정 날짜를 사용하지만, 업데이트가 성공하면 Spring Data에 의해 자동으로 변경된다.
+                            existingBook.version()); //기존 책 버전 사용 시 업데이트가 성공하면 자동으로 증가
                     return bookRepository.save(bookToUpdate);
                 })
                 .orElseGet(() -> addBookToCatalog(book));

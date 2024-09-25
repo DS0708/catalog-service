@@ -23,7 +23,7 @@ class CatalogServiceApplicationTests {
 
     @Test
     void whenPostRequestThenBookCreated() {
-        var expectedBook = new Book("1231231231", "Title", "Author", 9.90);
+        var expectedBook = Book.of("1231231231", "Title", "Author", 9.90);
 
         webTestClient
                 .post()
@@ -40,7 +40,7 @@ class CatalogServiceApplicationTests {
     @Test
     void whenGetRequestWithIdThenBookReturned() {
         var bookIsbn = "1231231230";
-        var bookToCreate = new Book(bookIsbn, "Title", "Author", 9.90);
+        var bookToCreate = Book.of(bookIsbn, "Title", "Author", 9.90);
 
         //Book 넣어놓기
         Book expectedBook = webTestClient
@@ -66,7 +66,7 @@ class CatalogServiceApplicationTests {
     @Test
     void whenPutRequestThenBookUpdated() {
         var bookIsbn = "1231231232";
-        var bookToCreate = new Book(bookIsbn, "Title", "Author", 9.90);
+        var bookToCreate = Book.of(bookIsbn, "Title", "Author", 9.90);
         Book createdBook = webTestClient
                 .post()
                 .uri("/books")
@@ -76,7 +76,7 @@ class CatalogServiceApplicationTests {
                 .expectBody(Book.class).value(book -> assertThat(book).isNotNull())
                 .returnResult().getResponseBody();
 
-        var bookToUpdate = new Book(createdBook.isbn(), createdBook.title(), createdBook.author(), 7.95);
+        var bookToUpdate = Book.of(createdBook.isbn(), createdBook.title(), createdBook.author(), 7.95);
         webTestClient
                 .put()
                 .uri("/books/" + bookIsbn)
@@ -86,13 +86,14 @@ class CatalogServiceApplicationTests {
                 .expectBody(Book.class).value(actualBook -> {
                     assertThat(actualBook).isNotNull();
                     assertThat(actualBook.price()).isEqualTo(bookToUpdate.price());
+//                    assertThat(actualBook.version()).isEqualTo(createdBook.version()+1); //보류
                 });
     }
 
     @Test
     void whenDeleteRequestThenBookDeleted() {
         var bookIsbn = "1231231233";
-        var bookToCreate = new Book(bookIsbn, "Title", "Author", 9.90);
+        var bookToCreate = Book.of(bookIsbn, "Title", "Author", 9.90);
         webTestClient
                 .post()
                 .uri("/books")
