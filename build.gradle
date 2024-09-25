@@ -28,6 +28,8 @@ configurations {
 ext{
     //spring cloud config client
     set('springCloudVersion', "2023.0.3")
+    //사용할 테스트컨테이너 버전 지정
+    set('testcontainersVersion', "1.17.3")
 }
 
 dependencies {
@@ -50,12 +52,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     //애플리케이션이 PostgreSQL 데이터베이스에 연결할 수 있도록 JDBC 드라이버 제공
     runtimeOnly 'org.postgresql:postgresql'
+    //PostgreSQL 데이터베이스에 대한 컨테이너 관리 기능을 제공
+    testImplementation 'org.testcontainers:postgresql'
 }
 
 dependencyManagement {
     imports {
         //spring cloud config client
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        //테스트 컨테이너 의존성관리를 위한 BOM
+        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
     }
 }
 
