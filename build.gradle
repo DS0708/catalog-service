@@ -54,6 +54,9 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     //PostgreSQL 데이터베이스에 대한 컨테이너 관리 기능을 제공
     testImplementation 'org.testcontainers:postgresql'
+    //Flyway
+//    implementation 'org.flywaydb:flyway-core' -> version conflict나서 공식문서 참고
+    implementation "org.flywaydb:flyway-database-postgresql"
 }
 
 dependencyManagement {

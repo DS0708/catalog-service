@@ -21,9 +21,6 @@ spring:
     hikari:
       connection-timeout: 2000 # 풀에서 connection object를 얻기 위해 기다려야 하는 최대 시간(ms)
       maximum-pool-size: 5 # 히카리CP가 풀에 최대한으로 유지할 수 있는 connection object의 수
-  sql: # 인메모리 데이터베이스를 사용하지 않는 경우 Spring  Data가 schema.sql 파일을 자동으로 로드하게 하기 위해 필요한 Option
-    init:
-      mode: always
 
 server:
   port: 9001 # server's port number

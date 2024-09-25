@@ -32,6 +32,8 @@ public record Book (
         @Positive(message = "The book price must be greater than zero.") //0보다 큰 값을 가져야함
         Double price,
 
+        String publisher, //새로운 선택적 필드, 기존에 존재하는 데이터 중에 publisher가 없는 데이터가 있으므로 값을 반드시 갖지 않아도 되는 선택적 필드로 선언해야함
+
         @CreatedDate    //entity가 생성된 때
         Instant createdDate,
         //Auditing가 활성화되면 Entity field에 이러한 annotation을 사용해 auditing 메타데이터를 캡처할 수 있다.
@@ -41,9 +43,9 @@ public record Book (
         @Version        //Optimistic Locking을 위해 사용되는 entity의 버전 번호
         int version
 ){
-        public static Book of(String isbn, String title, String author, Double price) {
+        public static Book of(String isbn, String title, String author, Double price, String publisher) {
                 //ID가 null이고 버전이 0이면 새로운 entity로 인식한다.
-                return new Book(null, isbn, title, author, price,null, null, 0);
+                return new Book(null, isbn, title, author, price,publisher,null, null, 0);
         }
 }
 /*

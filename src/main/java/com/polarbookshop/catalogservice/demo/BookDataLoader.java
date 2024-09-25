@@ -23,8 +23,8 @@ public class BookDataLoader {
     public void loadBookTestData() {
         bookRepository.deleteAll();
         // Spring Data JDBC 프레임워크가 내부적으로 식별자와 버전에 대한 할당 값을 처리
-        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90);
-        var book2 = Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90);
+        var book1 = Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90, "Polarsophia1");
+        var book2 = Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90, "Polarsophia2");
         bookRepository.saveAll(List.of(book1, book2));
     }
 }
