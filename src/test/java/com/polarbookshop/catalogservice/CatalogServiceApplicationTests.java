@@ -4,6 +4,7 @@ import com.polarbookshop.catalogservice.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )//기본적으로 스프링 부트 콘텍스트를 캐시로 저장해 @SpringBootTest 어노테이션이 붙거나
 // 혹은 이와 동일하게 설정된 모든 테스트 클래스에서 콘텍스트를 재사용하는 편리한 기능이 있음.
+@ActiveProfiles("integration")  //test/resources/application-integration.yaml에서 설정을 로드하기 위해 선언
 class CatalogServiceApplicationTests {
 
     //Test에서는 필드 기반 의존성 주입 방식이 여전히 허용 -> 자세한 것은 스프링 프레임워크 공식문서 확인
