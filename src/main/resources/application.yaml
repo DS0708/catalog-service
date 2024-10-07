@@ -1,6 +1,8 @@
 spring:
   application:
     name: catalog-service # 애플리케이션의 이름 설정
+  lifecycle:
+    timeout-per-shutdown-phase: 15s # grace period를 15초로 설정
   config:
     import: "optional:configserver:" # 외부 config server가 열려있으면 가져오고 없으면, 이것 사용
   cloud:
@@ -30,6 +32,7 @@ server:
     threads:
       max: 50 # 최대 스레드 수를 설정
       min-spare: 5 # 최소 여유 스레드 수
+  shutdown: graceful # graceful shutdown 활성화
 
 polar:
   greeting: Welcome to the local book catalog!
