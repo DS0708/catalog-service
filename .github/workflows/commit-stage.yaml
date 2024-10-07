@@ -9,7 +9,7 @@ env:
 jobs:
   build:  # 작업의 고유 식별자
     name: Build and Test  # 작업의 인간 친화적 명칭
-    runs-on: ubuntu-22.04 # 작업이 실행될 머신의 유형
+    runs-on: ubuntu-24.04 # 작업이 실행될 머신의 유형
     permissions:  # 작업에 부여된 권한
       contents: read  #현재 깃 저장소를 체크 아웃할 수 있는 권한
       security-events: write  # 깃허브에 보안 이벤트를 제출할 수 있는 권한
@@ -22,6 +22,10 @@ jobs:
         distribution: temurin
         java-version: 17
         cache: gradle
+    - name: Build, unit tests and integration tests
+      run: |
+        chmod +x gradlew 
+        ./gradlew build
     - name: Code vulnerability scanning
       uses: anchore/scan-action@v3 # grype를 사용해 취약성을 스캔
       id: scan
@@ -35,15 +39,11 @@ jobs:
       if: success() || failure() # 이전 단계가 실패하더라도 리포트 전송
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }} # 이전 단계 결과의 리포트를 가져온다.
-    - name: Build, unit tests and integration tests
-      run: |
-        chmod +x gradlew 
-        ./gradlew build
   package:
     name: Package and Publish
     if: ${{ github.ref == 'refs/heads/main' }} #잡을 main 브랜치에 대해서만 실행
     needs: [ build ]  #'build'잡이 성공적으로 수행된 경우에만 이 잡을 실행
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read  # 현재 깃 저장소를 체크아웃하기 위한 권한
       packages: write # 깃허브 컨테이너 저장소로 이미지를 업로드하기 위한 권한
