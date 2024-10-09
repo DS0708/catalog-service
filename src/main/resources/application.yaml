@@ -11,7 +11,7 @@ spring:
       request-connect-timeout: 5000 # Config Server로의 연결 시도 시간 제한(ms)
       request-read-timeout: 5000 # Config Server로부터 응답을 기다리는 시간 제한(ms)
       fail-fast: false # 초기 시작 시 구성 서버 연결 실패 시 애플리케이션이 실패하도록 설정(true일 경우). 개발 환경에서는 false로 설정.
-      retry:
+      retry: # fail-fast가 true일때만 retry를 시도!!
         max-attempts: 6 # 재시도 할 최대 횟수
         initial-interval: 1000 # 첫 재시도 간격(ms)
         max-interval: 2000 # 재시도 간격의 최대 값(ms)
