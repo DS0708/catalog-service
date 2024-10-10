@@ -2,7 +2,7 @@ package com.polarbookshop.catalogservice.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "polar")  //클래스의 필드에 외부 설정 파일(.properties, .yml)의 값들을 바인딩하는 데 사용
+@ConfigurationProperties(prefix = "polar")  //클래스의 필드에 외부 설정 파일(.properties, .yml)의 값들을 바인딩하는 데 사용(@ConfigurationPropertiesScan를 같이 작성해줘야함)
 public class PolarProperties {
     /*
     * A message to welcome users.
